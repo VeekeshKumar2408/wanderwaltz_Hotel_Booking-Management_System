@@ -27,7 +27,7 @@ public class RoomResponse {
     }
 
     public RoomResponse(Long id, String roomType, BigDecimal roomPrice,
-                        boolean isBooked, byte[] photoBytes, List<BookingResponse> bookings) {
+                        boolean isBooked, byte[] photoBytes) {
         this.id = id;
         this.roomType = roomType;
         this.roomPrice = roomPrice;
@@ -38,6 +38,6 @@ public class RoomResponse {
             that we can actually display as a ref photo on our web page
          */
         this.photo = photoBytes != null ? Base64.encodeBase64String(photoBytes): null;
-        this.bookings = bookings;
+        //this.bookings = bookings;
     }
 }
