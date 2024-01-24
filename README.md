@@ -56,8 +56,4 @@ Welcome to WanderWaltz Hotel Booking System! This application is built using Rea
 
 We welcome contributions to enhance the functionality and features of WanderWaltz. If you find any bugs or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 Happy booking with WanderWaltz! 🌐🏨
