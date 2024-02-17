@@ -2,7 +2,7 @@
 
 [Front-End Git Link](https://github.com/VeekeshKumar2408/wanderwaltz_Hotel_Booking-Management_System_FrontEnd)
 
-Welcome to WanderWaltz Hotel Booking System! This application is built using React, Vite, MySQL, Bootstrap, and Spring, providing a seamless experience for hotel booking.
+Welcome to WanderWaltz Hotel Booking System! This application is built using React, Vite, MySQL, Bootstrap, and Spring, providing a seamless experience for hotel booking. Click on the Git Link above to explore the front-end.
 
 ## Features
 
