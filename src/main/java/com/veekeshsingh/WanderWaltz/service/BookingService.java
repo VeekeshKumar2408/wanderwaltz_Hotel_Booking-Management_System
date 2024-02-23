@@ -1,5 +1,6 @@
 package com.veekeshsingh.WanderWaltz.service;
 import com.veekeshsingh.WanderWaltz.exception.InvalidBookingRequestException;
+import com.veekeshsingh.WanderWaltz.exception.ResourceNotFoundException;
 import com.veekeshsingh.WanderWaltz.model.BookedRoom;
 import com.veekeshsingh.WanderWaltz.model.Room;
 import com.veekeshsingh.WanderWaltz.repository.BookingRepository;
@@ -46,7 +47,7 @@ public class BookingService implements IBookingService {
  */
             bookingRepository.save(bookingRequest);
         } else {
-            throw new InvalidBookingRequestException("Sorry,This room is not available for selected date");
+            throw new InvalidBookingRequestException("Sorry,This room is not available for selected dates");
         }
         return bookingRequest.getBookingConfirmationCode();
     }
@@ -55,27 +56,28 @@ public class BookingService implements IBookingService {
         return existingBookings.stream()
                 .noneMatch(existingBooking ->
                         bookingRequest.getCheckInDate().equals(existingBooking.getCheckInDate())
-                            || bookingRequest.getCheckOutDate().isBefore(existingBooking.getCheckOutDate())
-                            || (bookingRequest.getCheckInDate().isAfter(existingBooking.getCheckInDate())
-                            && bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckOutDate()))
-                            || (bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckInDate())
+                                || bookingRequest.getCheckOutDate().isBefore(existingBooking.getCheckOutDate())
+                                || (bookingRequest.getCheckInDate().isAfter(existingBooking.getCheckInDate())
+                                && bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckOutDate()))
+                                || (bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckInDate())
 
-                            && bookingRequest.getCheckOutDate().equals(existingBooking.getCheckOutDate()))
-                            || (bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckInDate())
+                                && bookingRequest.getCheckOutDate().equals(existingBooking.getCheckOutDate()))
+                                || (bookingRequest.getCheckInDate().isBefore(existingBooking.getCheckInDate())
 
-                            && bookingRequest.getCheckOutDate().isAfter(existingBooking.getCheckOutDate()))
+                                && bookingRequest.getCheckOutDate().isAfter(existingBooking.getCheckOutDate()))
 
-                            || (bookingRequest.getCheckInDate().equals(existingBooking.getCheckOutDate())
-                            &&  bookingRequest.getCheckOutDate().equals(existingBooking.getCheckInDate()))
+                                || (bookingRequest.getCheckInDate().equals(existingBooking.getCheckOutDate())
+                                && bookingRequest.getCheckOutDate().equals(existingBooking.getCheckInDate()))
 
-                            || (bookingRequest.getCheckInDate().equals(existingBooking.getCheckOutDate())
-                             && bookingRequest.getCheckOutDate().equals(bookingRequest.getCheckInDate()))
+                                || (bookingRequest.getCheckInDate().equals(existingBooking.getCheckOutDate())
+                                && bookingRequest.getCheckOutDate().equals(bookingRequest.getCheckInDate()))
                 );
     }
 
     @Override
     public BookedRoom findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode).
+                orElseThrow(() -> new ResourceNotFoundException("No Booking Found With Booking Code: "+ confirmationCode));
     }
 
 }
